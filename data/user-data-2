@@ -1,5 +1,10 @@
-# create new user
-adduser untserver
+apt-get update
+# whois has mkpasswd utility used in next step
+apt-get install whois 
+
+# username must be linux username compliant (it's going to be a directory)
+# useradd -d /home/dummy -g idiots -m -p $(mkpasswd --hash=SHA-512 password) dummy
+useradd -d /home/untserver -m -p $(mkpasswd --hash=SHA-512 password) untserver
 
 # give user sudo
 usermod -aG sudo untserver

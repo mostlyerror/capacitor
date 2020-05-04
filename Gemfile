@@ -43,3 +43,5 @@ group :development do
 end
 
 gem "devise", "~> 4.7"
+
+gem "awesome_print", "~> 1.8", :group => :development

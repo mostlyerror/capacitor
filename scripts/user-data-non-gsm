@@ -1,0 +1,108 @@
+##Recipe for Debian GNU/Linux 8.7 (jessie)
+apt install screen htop unzip #Utils
+apt install lib32stdc++6 #SteamCMD dependencies
+apt install mono-runtime libmono2.0-cil
+apt install libc6 libgl1-mesa-glx libxcursor1 libxrandr2 # prerequisites for Unity 3D
+apt install libc6-dev libgcc-4.8-dev # prequesites for BattlEye
+
+#/bin/bash
+export server_dir='unturnedserver'
+export username='unt1'
+export steamid='76561198067086870'
+export steam_psd='skywalker1'
+
+echo Now the user is $USER
+
+apt-get update
+# apt install -y sudo
+# apt install -y wget
+#
+
+# Utils
+apt-get install -y htop unzip
+# SteamCMD
+apt install -y lib32stdc++6
+# C# Mono Environment for Unturned
+apt install -y mono-runtime libmono-cil-dev
+# Unity 3D
+apt install -y libgl1-mesa-glx libxcursor1 libxrandr2
+# BattleEye
+apt install -y libc6-dev 
+
+# apt install -y libgcc-8-dev
+# E: Unable to locate package libgcc-8-dev
+
+adduser $username
+usermod -aG sudo $username
+
+sudo -u $username -H sh -c "mkdir -p /home/$username/$server_dir"
+
+cd /home/$username/$server_dir
+mkdir steamcmd
+cd steamcmd
+wget --no-check-certificate https://steamcdn-a.akamaihd.net/client/installer/steamcmd_linux.tar.gz
+
+tar xvf steamcmd_linux.tar.gz
+rm steamcmd_linux.tar.gz
+chmod +x steamcmd.sh
+
+cd /home/$username/$server_dir
+wget --no-check-certificate https://github.com/RocketMod/Rocket.Unturned/releases/download/4.9.3.0/Rocket.Unturned.zip
+unzip Rocket.Unturned.zip
+mv Scripts/Linux/* .
+# chmod +x update.sh start.sh
+./update.sh $steamid $steam_psd
+# Redirecting stderr to '/home/untserver/Steam/logs/stderr.txt'
+# ILocalize::AddFile() failed to load file "public/steambootstrapper_english.txt".
+# Loading Steam API...Warning: failed to init SDL thread priority manager: SDL not found
+# Success! App '1110390' fully installed.
+#CWorkThreadPool::~CWorkThreadPool: work processing queue not empty: 2 items discarded.
+#
+rm -rf Scripts/
+
+mkdir lib
+cp steamclient.so lib
+
+su $username
+./start.sh
+# chmod the steamclient.so so you don't have to do what i did:
+# sudo ./start.sh
+# enter Y at prompt
+
+
+
+
+# untserver@base-unturned-debian-s-1vcpu-1gb-nyc3-01:~/unturnedserver$ ./start.sh
+Steam: diff: /home/untserver/unturnedserver/lib: No such file or directory
+UPDATING
+
+WARNING: The runtime version supported by this application is unavailable.
+Using default runtime: v4.0.30319
+Rocket Unturned v4.9.3.0 for Unturned v3.20.3.2
+
+Mounting core: 0%
+Mounting core: 1%
+
+untserver@base-unturned-debian-s-1vcpu-1gb-nyc3-01:~/unturnedserver$ cat update.sh
+#!/bin/bash
+# This script installs / updates steamcmd and Unturned 3 on Linux machines
+# Syntax: update.sh
+# Author: fr34kyn01535
+
+
+
+# contents of update.sh
+STEAMCMD_HOME="$PWD/../steamcmd"
+UNTURNED_HOME="$PWD"
+
+mkdir -p $STEAMCMD_HOME
+mkdir -p $UNTURNED_HOME
+
+cd $STEAMCMD_HOME
+if [ ! -f "steamcmd.sh" ]; then
+	wget http://media.steampowered.com/client/steamcmd_linux.tar.gz
+	tar -xvzf steamcmd_linux.tar.gz
+	rm steamcmd_linux.tar.gz
+fi
+
+./steamcmd.sh +login anonymous +force_install_dir $UNTURNED_HOME +app_update 1110390 validate +exit

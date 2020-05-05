@@ -1,0 +1,16 @@
+#cloud-config
+package_update: true
+package_upgrade: true
+
+# ssh_authorized_keys:
+#   - ssh_key_1
+#   - ssh_key_2
+
+# generate server's private keys ahead of time
+# ssh_keys:
+#   rsa_private: |
+#     -----BEGIN RSA PRIVATE KEY-----
+#     your_rsa_private_key
+#     -----END RSA PRIVATE KEY-----
+
+

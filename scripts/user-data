@@ -1,0 +1,95 @@
+apt-get -y update
+# makepasswd utility of whois
+apt-get install whois 
+
+mkpasswd --hash=SHA-512 --salt=skywalker1
+# does passwd have to be encrypted?
+
+
+# bypass prompts
+# yes | adduser ben
+# adduser -h
+#   --conf | -c FILE  use FILE as configuration file
+#   https://askubuntu.com/questions/94060/run-adduser-non-interactively
+#   Use the --gecos option to skip the chfn interactive part.
+# 
+# adduser --disabled-password --gecos "" username
+# It's all in the man page. Not the most obvious formulation tho.
+# 
+# --gecos GECOS
+#           Set  the  gecos field for the new entry generated.  adduser will
+#           not ask for finger information if this option is given.
+# The GECOS field is a comma separated list as such: Full name,Room number,Work phone,Home phone, despite that man page mentions finger information Details - Wikipedia
+# useradd -m -p qwer -s /bin/bash asdf
+# reate new user
+
+
+
+
+apt-get update
+apt-get upgrade
+sudo dpkg --add-architecture i386; sudo apt update; sudo apt install steamcmd mono-complete
+apt-get install curl unzip binutils bc jq tmux netcat lib32gcc1 lib32stdc++6 steamcmd mono-complete
+
+
+adduser untserver
+usermod -aG sudo untserver
+su - untserver
+
+wget -O linuxgsm.sh https://linuxgsm.sh
+chmod +x linuxgsm.sh & bash linuxgsm.sh untserver
+
+./untserver install
+# will this let me skip the prompts?
+# ./untserver auto-install
+ 
+# Checking Dependencies
+# =================================
+# curl
+# wget
+# ca-certificates
+# file
+# bsdmainutils
+# util-linux
+# python3
+# tar
+# bzip2
+# gzip
+# unzip
+# binutils
+# bc
+# jq
+# tmux
+# netcat
+# lib32gcc1
+# lib32stdc++6
+# 
+# # steamcmd and mono-complete will be missing, but linuxgsm will install the repos & libraries itself
+# steamcmd
+# mono-complete
+
+# ..Bunch of pre-filled "Y" [Y/n] prompts
+# server failed to start because ip wasn't configured:
+
+untserver@ubuntu-s-1vcpu-1gb-nyc3-01:~$ ./untserver details
+# [ WARN ] Details untserver: Check IP: Multiple IP addresses found.
+# Information! Specify the IP you want to bind within a LinuxGSM config file.
+# * location: /home/untserver/lgsm/config-lgsm/untserver
+
+Set ip="0.0.0.0" to one of the following:
+10.17.0.5
+138.197.6.122
+
+https://linuxgsm.com/network-interfaces
+
+
+# set ip
+Need to echo my IP to this
+echo 'ip="138.197.6.122"' >> ~/lgsm/config-lgsm/untserver/untserver.cfg
+./untserver start
+
+./untserver pd
+
+
+
+

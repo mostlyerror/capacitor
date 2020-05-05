@@ -1,0 +1,50 @@
+#cloud-config
+# apt_update: true
+package_update: true
+# apt_upgrade: false
+package_upgrade: true
+
+packages: whois
+
+# ssh_authorized_keys:
+#   - ssh_key_1
+#   - ssh_key_2
+
+# generate server's private keys ahead of time
+# ssh_keys:
+#   rsa_private: |
+#     -----BEGIN RSA PRIVATE KEY-----
+#     your_rsa_private_key
+#     -----END RSA PRIVATE KEY-----
+
+groups:
+  - unt-users
+
+users:
+  - name: ben
+    ssh-authorized-keys:
+      - $(cat ~/.ssh/id_rsa.pub)
+    sudo: ['ALL=(ALL) NOPASSWD:ALL']
+    groups: sudo
+    shell: /bin/bash
+      - name: unt
+        passwd: unt
+        groups: unt-users
+        sudo: false
+
+runcmd:
+  - sed -i -e '/^Port/s/^.*$/Port 4444/' /etc/ssh/sshd_config
+  - sed -i -e '/^PermitRootLogin/s/^.*$/PermitRootLogin no/' /etc/ssh/sshd_config
+  - sed -i -e '$aAllowUsers demo' /etc/ssh/sshd_config
+  - restart ssh"
+
+
+write_files:
+  - content: This is a test of write_files
+    path: /tmp
+
+  # final_message
+  # default: cloud-init boot finished at $TIMESTAMP. Up $UPTIME seconds
+  # this message is written by cloud-final when the system is finished
+  # its first boot
+  final_message: "The system is finally up, after $UPTIME seconds"

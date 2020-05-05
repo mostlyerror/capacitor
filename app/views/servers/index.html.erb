@@ -1,0 +1,25 @@
+<h1 class="text-xl">Servers#index</h1>
+
+<ul class="list-none">
+  <% @servers.each do |server| %>
+    <li>
+      <p>id: <%= server.id %></p>
+      <p>user: <%= server.user_id %></p>
+      <p>external_id: <%= server.external_id %></p>
+      <p>external_id (jsonb): <%= server.api_data['id'] %></p>
+      <p>provider: <%= server.provider %></p>
+      <p>created_at: <%= server.created_at %></p>
+      <p>updated_at: <%= server.updated_at %></p>
+    </li>
+  <% end %>
+</ul>
+
+<div>
+  <h2 class="text-lg">Create Server</h2>
+  <%= render partial: "form", locals: {server: @server} %>
+</div>
+
+<div>
+  <h2 class="text-lg">Clear Servers</h2>
+  <%= button_to "Clear", { action: 'clear' }, disabled_with: @servers.none?, method: :delete %>
+</div>

@@ -1,0 +1,15 @@
+<%= form_for @server do |f| %>
+  <%= f.label :name %>
+  <%= f.text_field :name, placeholder: 'myDroplet', value: 'myDroplet' %>
+  <p>Regions</p>
+  <ul class="list-none">
+    <% @regions.each do |region| %>
+      <li>
+        <%= f.radio_button :region, region.slug %>
+        <%= f.label :region, region.name %>
+      </li>
+    <% end %>
+  </ul>
+
+  <%= f.submit %>
+<% end %>

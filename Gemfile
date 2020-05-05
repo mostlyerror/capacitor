@@ -45,3 +45,5 @@ end
 gem "devise", "~> 4.7"
 
 gem "awesome_print", "~> 1.8", :group => :development
+
+gem "droplet_kit", "~> 3.7"

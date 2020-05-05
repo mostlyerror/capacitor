@@ -10,10 +10,27 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_05_03_152210) do
+ActiveRecord::Schema.define(version: 2020_05_04_172640) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "servers", force: :cascade do |t|
+    t.bigint "user_id"
+    t.string "status", default: "pending", null: false
+    t.string "provider", null: false
+    t.string "external_id"
+    t.string "name"
+    t.string "region"
+    t.jsonb "api_data", default: "{}"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["api_data"], name: "index_servers_on_api_data", using: :gin
+    t.index ["user_id"], name: "index_servers_on_user_id"
+  end
+
+  create_table "test_users", force: :cascade do |t|
+  end
 
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
@@ -27,4 +44,5 @@ ActiveRecord::Schema.define(version: 2020_05_03_152210) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "servers", "users"
 end
